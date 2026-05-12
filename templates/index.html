@@ -1,0 +1,24 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Home{% endblock  %}
+
+{% block 'body' %}
+
+{{ request.path }}
+
+    <img src="{% static 'images/Selenium.png' %}" style="width:100px">
+    <h1 >Home Page</h1>
+    <h2>{{person.name}}</h2>
+    <h2>{{person.email}}</h2>
+    {%  if person.age >= 18 %}
+        <h2>{{person.age}}</h2>
+    {% else %}
+        <h2 style="color:red">Age is less than 18</h2>
+    {% endif %}
+    {% for c in person.contact %}
+        <h2>{{c}}</h2>
+    {% endfor %}
+</body>
+</html>
+{% endblock  %}

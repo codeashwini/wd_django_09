@@ -1,0 +1,19 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block 'title' %}{% endblock  %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <script src="https://kit.fontawesome.com/b1b57d4f0d.js" crossorigin="anonymous"></script>
+</head>
+<body>
+{% include "header.html" %}
+
+
+
+{% block 'body' %}
+
+{% endblock  %}

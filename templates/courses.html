@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block 'title' %}Courses{% endblock  %}
+
+{% block 'body' %}
+
+<div style="display: flex; flex-wrap: wrap; gap: 20px; padding: 20px;">
+{% for course in data.course_details  %}
+
+<div class="card" style="flex: 0 1 calc(33.333% - 20px); width: calc(33.333% - 20px);">
+  <i class="{{course.course_icon}} card-img-top"></i>
+  <div class="card-body">
+    <h5 class="card-title">{{course.course_title | title}}</h5>
+    <p class="card-text">{{course.course_desc | safe}}</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
+</div>
+
+
+{% endfor %}
+</div>
+
+{% endblock  %}
