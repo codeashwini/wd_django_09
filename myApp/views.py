@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from course.models import Courses
 def home(request):
+    print("This is added")
     # data = {
     #     'name':"Naman",
     #     'email':'aman@gmail.com',
