@@ -5,8 +5,15 @@
 
 {% block 'body' %}
 
-{{ request.path }}
+    <marquee onmouseover="stop()" onmouseout="start()">
 
+        {% for course in data %}
+        
+        <a href="/courses/{{course.id}}">{{course.course_title}}</a> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {% endfor %}
+
+
+    </marquee>
     <img src="{% static 'images/Selenium.png' %}" style="width:100px">
     <h1 >Home Page</h1>
     <h2>{{person.name}}</h2>

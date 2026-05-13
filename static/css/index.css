@@ -2,3 +2,11 @@ a{
     text-decoration: none;
     color:whitesmoke;
 }
+
+marquee{
+    background-color: teal;
+    height:50px;
+    /* font-size: 32px; */
+    line-height: 50px;
+    
+}

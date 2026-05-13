@@ -2,6 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from course.models import Courses
 def home(request):
+    data = Courses.objects.all()
     print("This is added")
     # data = {
     #     'name':"Naman",
@@ -9,7 +10,7 @@ def home(request):
     #     'age':10,
     #     'contact':[9876543210, 8765432190]
     # }
-    return render(request, "index.html")
+    return render(request, "index.html", {'data':data})
 
 def about(request):
     return render(request, "about.html")
@@ -41,3 +42,14 @@ def courses(request):
     }
 
     return render(request, 'courses.html', {'data':data})
+
+
+def courseDetail(request, courseId):
+
+    courseDetail = Courses.objects.get(id=courseId)
+
+    data = {
+        'courseDetail':courseDetail
+    }
+
+    return render(request, "courseDetail.html", data)
