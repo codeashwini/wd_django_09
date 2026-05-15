@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'course',
-    'tinymce'
+    'tinymce',
+    'autoslug',
+    'notifications'
 ]
 
 MIDDLEWARE = [

@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block 'title' %}{{notificationDetail.notification_title}}{% endblock  %}
+
+{% block 'body' %}
+
+    <h1>{{notificationDetail.notification_title}}</h1>
+    <p>{{notificationDetail.notification_desc | safe}}</p>
+{% endblock  %}

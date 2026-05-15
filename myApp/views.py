@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from course.models import Courses
+from notifications.models import NotificationModel
 def home(request):
     data = Courses.objects.all()
     print("This is added")
@@ -13,7 +14,8 @@ def home(request):
     return render(request, "index.html", {'data':data})
 
 def about(request):
-    return render(request, "about.html")
+    notifications = NotificationModel.objects.all()
+    return render(request, "about.html", {'notifications':notifications})
 
 def contact(request):
 
@@ -44,12 +46,23 @@ def courses(request):
     return render(request, 'courses.html', {'data':data})
 
 
-def courseDetail(request, courseId):
+def courseDetail(request, slug):
 
-    courseDetail = Courses.objects.get(id=courseId)
+    courseDetail = Courses.objects.get(course_slug=slug)
 
     data = {
         'courseDetail':courseDetail
     }
 
     return render(request, "courseDetail.html", data)
+
+
+def notification_display(request, slug):
+
+    notificationDetails = NotificationModel.objects.get(notification_slug = slug)
+
+    data = {
+        "notificationDetail":notificationDetails
+    }
+
+    return render(request, "notification_detail.html",data)

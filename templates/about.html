@@ -16,6 +16,12 @@
     {% for c in person.contact %}
         <h2>{{c}}</h2>
     {% endfor %}
+
+
+    {% for n in notifications %}
+        <a href="/notification/{{n.notification_slug}}">{{n.notification_title}}</a>
+    
+    {% endfor %}
 </body>
 </html>
 {% endblock  %}
