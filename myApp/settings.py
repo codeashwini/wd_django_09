@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'course',
     'tinymce',
     'autoslug',
-    'notifications'
+    'notifications',
+    'contact'
 ]
 
 MIDDLEWARE = [

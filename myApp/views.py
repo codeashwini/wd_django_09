@@ -1,7 +1,8 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from course.models import Courses
 from notifications.models import NotificationModel
+from contact.models import Contact
 def home(request):
     data = Courses.objects.all()
     print("This is added")
@@ -19,20 +20,22 @@ def about(request):
 
 def contact(request):
 
-    data = {}
-    try:
-        if request.method == 'POST':
-            email = request.POST.get('email')
-            address1 = request.POST.get('address1')
+    if request.method == 'POST':
+        e = request.POST.get('email')
+        a = request.POST.get('address1')
+        a2 = request.POST.get('address2')
+        p = request.POST.get('password')
+        c = request.POST.get('city')
+        s = request.POST.get('state')
+        z = request.POST.get('zip')
+        t = request.POST.get('check')
 
-            data = {
-                'email':email,
-                'address1':address1
-            }
-    except:
-        pass
+        c = Contact(email=e, password = p,address=a, address2=a2,city=c, state=s, zip=z, terms=t)
 
-    return render(request, "contact.html", {'output':data})
+        c.save()
+        return HttpResponseRedirect("/")
+
+    return render(request, "contact.html")
 
 
 def courses(request):
@@ -66,3 +69,4 @@ def notification_display(request, slug):
     }
 
     return render(request, "notification_detail.html",data)
+

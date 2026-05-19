@@ -6,7 +6,7 @@
 {{ request.path }}
 
 <div class="container">
-   <form class="row g-3" method="post">
+   <form class="row g-3" method="post" action="/contact/">
     {% csrf_token %}
         <div class="col-md-6">
             <label for="inputEmail4" class="form-label">Email</label>
@@ -32,10 +32,10 @@
             <label for="inputState" class="form-label">State</label>
             <select id="inputState" class="form-select" name="state">
                 <option selected>Choose...</option>
-                <option>Delhi</option>
-                <option>UP</option>
-                <option>Mumbai</option>
-                <option>Noida</option>
+                <option value="Delhi">Delhi</option>
+                <option value="UP">UP</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Noida">Noida</option>
             </select>
         </div>
         <div class="col-md-2">
