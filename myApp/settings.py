@@ -41,7 +41,8 @@ INSTALLED_APPS = [
     'tinymce',
     'autoslug',
     'notifications',
-    'contact'
+    'contact',
+    'UserReg'
 ]
 
 MIDDLEWARE = [

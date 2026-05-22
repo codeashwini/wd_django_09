@@ -3,6 +3,8 @@ from django.shortcuts import render
 from course.models import Courses
 from notifications.models import NotificationModel
 from contact.models import Contact
+from UserReg.models import RegUser
+
 def home(request):
     data = Courses.objects.all()
     print("This is added")
@@ -70,3 +72,35 @@ def notification_display(request, slug):
 
     return render(request, "notification_detail.html",data)
 
+def user_login(request):
+
+    if request.method == 'POST':
+        e = request.POST.get('email')
+        p = request.POST.get('password')
+
+        reg_e = RegUser.objects.get(email = e)
+        reg_p = RegUser.objects.get(password = p)
+
+        if reg_e != None and reg_p != None:
+            return HttpResponseRedirect('/')
+
+    return render(request, "login.html")
+
+def user_register(request):
+
+    if request.method == 'POST':
+        n = request.POST.get('name')
+        e = request.POST.get('email')
+        p = request.POST.get('phone')
+        c = request.POST.get('course')
+        pas= request.POST.get('password')
+        c_pas = request.POST.get('confirm_pass')
+        t = request.POST.get('terms')
+
+        u = RegUser(name=n, email=e, course = c, phone=p, password = pas, confirm_pass = c_pas, terms = t)
+
+        u.save()
+
+        return HttpResponseRedirect('/login/')
+
+    return render(request, "register.html")

@@ -10,3 +10,74 @@ marquee{
     line-height: 50px;
     
 }
+
+ body {
+      background: linear-gradient(to right, #4e73df, #224abe);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+    }
+
+    .register-card {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .card-header {
+      background: #fff;
+      text-align: center;
+      padding: 25px;
+    }
+
+    .card-header h2 {
+      color: #224abe;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .btn-primary {
+      background-color: #224abe;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #1b3a9b;
+    }
+
+    .login-card {
+      width: 100%;
+      max-width: 420px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    }
+
+    .card-header {
+      background: #fff;
+      text-align: center;
+      padding: 25px;
+    }
+
+    .card-header h2 {
+      color: #224abe;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    .btn-primary {
+      background-color: #224abe;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      background-color: #1b3a9b;
+    }
+
+    a {
+      text-decoration: none;
+    }

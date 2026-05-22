@@ -1,0 +1,78 @@
+
+{% extends "base.html" %}
+{% load static %}
+{% block 'title' %}Login{% endblock  %}
+
+
+{% block 'body' %}
+<div class="container mt-5">
+  <div class="card login-card">
+
+    <div class="card-header">
+      <h2>EdTech Login</h2>
+      <p class="text-muted mb-0">Access your learning dashboard</p>
+    </div>
+
+    <div class="card-body p-4">
+
+      <form method="post" action="/login/">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Email Address</label>
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            placeholder="Enter your email"
+            required
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            placeholder="Enter your password"
+            required
+          />
+        </div>
+
+        <div class="d-flex justify-content-between mb-3">
+          <div class="form-check">
+            <input
+              class="form-check-input"
+              type="checkbox"
+              name="remember"
+              id="remember"
+            />
+            <label class="form-check-label" for="remember">
+              Remember me
+            </label>
+          </div>
+
+          <a href="#">Forgot Password?</a>
+        </div>
+
+        <div class="d-grid mb-3">
+          <button type="submit" class="btn btn-primary btn-lg">
+            Login
+          </button>
+        </div>
+
+        <div class="text-center">
+          <p class="mb-0">
+            Don't have an account?
+            <a href="#">Register Here</a>
+          </p>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock  %}
