@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{% static 'css/index.css' %}">
     <script src="https://kit.fontawesome.com/b1b57d4f0d.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body {% block 'body_class' %}{% endblock %}>
 {% include "header.html" %}
 
 

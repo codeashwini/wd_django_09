@@ -9,3 +9,4 @@ class RegUser(models.Model):
     password = models.CharField(max_length=10)
     confirm_pass = models.CharField(max_length=10)
     terms = models.CharField(max_length=10)
+    reset_token = models.CharField(max_length=100, null=True, blank=True)

@@ -21,12 +21,16 @@ from myApp import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', views.home),
+    path('', views.home, name="home"),
     path('about/', views.about),
     path('contact/', views.contact),
     path('courses/', views.courses),
     path('courses/<slug>', views.courseDetail),
     path('notification/<slug>', views.notification_display),
-    path('login/', views.user_login),
-    path('register/', views.user_register)
+    path('login/', views.user_login, name="user_login"),
+    path('register/', views.user_register, name="user_register"),
+    path('profile/', views.profile),
+    path('logout/', views.logout),
+    path('forgot-password/', views.forgot_password),
+    path('reset-password/<token>', views.reset_passsword)
 ]
