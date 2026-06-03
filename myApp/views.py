@@ -7,6 +7,10 @@ from UserReg.models import RegUser
 from django.contrib.auth.hashers import make_password,check_password
 import uuid
 from django.core.mail import send_mail
+from django.utils import timezone
+from datetime import timedelta
+from django.conf import settings
+import requests
 
 def home(request):
 
@@ -91,6 +95,8 @@ def user_login(request):
             if check_password(p, user.password):
                 request.session['user_id'] = user.id
                 request.session['user_name'] = user.name
+                request.session['user_image'] = (user.profile_image.url if user.profile_image else None)
+
                 if r:
                     request.session.set_expiry(30*24*60*60)
                 else:
@@ -124,7 +130,17 @@ def user_register(request):
 def profile(request):
     if 'user_id' not in request.session:
         return redirect('/login/')
-    return render(request, "profile.html")
+    
+    user  = RegUser.objects.get(id=request.session['user_id'])
+
+    if request.method == 'POST':
+        if request.FILES.get('profile_image'):
+            user.profile_image = request.FILES['profile_image']
+           
+            user.save()
+            request.session["user_image"] = user.profile_image.url
+
+    return render(request, "profile.html", {'user':user})
 
 def logout(request):
     request.session.flush()
@@ -133,12 +149,48 @@ def logout(request):
 def forgot_password(request):
     if request.method == "POST":
         email = request.POST.get('email')
+        captcha_response = request.POST.get('g-recaptcha-response')
+
+        if not captcha_response:
+            return render(request, 'forgot_password.html', {
+                'error':'Please verify that you are not a robot',
+                'site_key':settings.RECAPTCHA_SITE_KEY
+            })
+        
+        captcha_verify_url = 'https://www.google.com/recaptcha/api/siteverify'
+        captcha_data = {
+            'secret':settings.RECAPTCHA_SECRET_KEY,
+            'response':captcha_response
+        }
+
+        captcha_result = requests.post(captcha_verify_url, data=captcha_data).json()
+
+        if not captcha_result.get('success'):
+            return render(request, 'forgot_password.html', {
+                'error':'CAPTCHA verification failed. Try again.',
+                'site_key':settings.RECAPTCHA_SITE_KEY
+            })
 
         try:
             user =RegUser.objects.get(email=email)
+            now = timezone.now()
+
+            if user.last_reset_request:
+                time_diff = now - user.last_reset_request
+
+                if time_diff < timedelta(minutes=30):
+                    if user.reset_request_count >=3:
+                       return render(request, 'forgot_password.html', {'error':'Too many reset requests. Please try again after 30 minutes'})
+                else:
+                    user.reset_request_count = 0 
 
             token = str(uuid.uuid4())
             user.reset_token = token
+            user.token_created_at = timezone.now()
+
+            user.reset_request_count += 1
+            user.last_reset_request = now
+
             user.save()
 
             reset_link = f"http://127.0.0.1:8000/reset-password/{token}"
@@ -150,17 +202,23 @@ def forgot_password(request):
                 recipient_list=[email]
             )
 
-            return render(request, 'forgot_password.html', {'msg':'Password reset link sent to your gmail'})
+            return render(request, 'forgot_password.html', {'msg':'Password reset link sent to your gmail', 'site_key':settings.RECAPTCHA_SITE_KEY})
 
         except Exception as e:
-            return render(request, 'forgot_password.html', {'error':'Email not  registered'})
+            return render(request, 'forgot_password.html', {'error':'Email not  registered', 'site_key':settings.RECAPTCHA_SITE_KEY})
         
-    return render(request, 'forgot_password.html')
+    return render(request, 'forgot_password.html', {'site_key':settings.RECAPTCHA_SITE_KEY})
 
 
 def reset_passsword(request, token):
+
+
     try:
         user = RegUser.objects.get(reset_token = token)
+        expiry_time = user.token_created_at + timedelta(minutes=15)
+
+        if timezone.now() > expiry_time:
+            return render(request, 'reset_password.html', {'error':'Reset link has expired'})
 
         if request.method == "POST":
             password = request.POST.get('password')
@@ -171,7 +229,7 @@ def reset_passsword(request, token):
             
             user.password = make_password(password)
             user.reset_token = None
-
+            user.token_created_at = None
             user.save()
 
         return render(request, 'reset_password.html')

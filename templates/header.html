@@ -25,16 +25,27 @@
 
         <form class="d-flex">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                {% if request.path == '/profile/' %}
-                    <li><a href="/logout/">Logout</a></li>
+                {% if request.session.user_id %}
+                    {% if request.session.user_image %}
+                        <img src="{{request.session.user_image}}" width="30" style="border-radius:50%">
+
+                    {% else %}
+                        <img src="/static/images/Selenium.png" width="30" style="border-radius=50%">
+                    
+                    {% endif %}
+                    {{request.session.user_name}}
+
+                    <a href="/profile/">Profile</a>
+                    <a href="/logout/">Logout</a>
+                   
                 
                 {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="/login/">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/register/">Register</a> 
-                </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/login/">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register/">Register</a> 
+                    </li>
                 {% endif %}
             </ul>
         </form>

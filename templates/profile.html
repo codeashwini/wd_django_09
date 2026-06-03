@@ -6,4 +6,20 @@
 
 <h1>Welcome User</h1>
 
+{% if user.profile_image %}
+
+<img src="{{user.profile_image.url}}" width="150" heiht="150">
+{% else %}
+    <img src="/static/images/Selenium.png" width="150">
+{% endif %}
+
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="profile_image" required>
+    <button type="submit">Upload Image</button>
+</form>
+
+<p><b>Name:</b>{{user.name}}</p>
+<p><b>Email:</b>{{user.email}}</p>
+
 {% endblock  %}

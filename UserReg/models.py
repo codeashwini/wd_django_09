@@ -10,3 +10,8 @@ class RegUser(models.Model):
     confirm_pass = models.CharField(max_length=10)
     terms = models.CharField(max_length=10)
     reset_token = models.CharField(max_length=100, null=True, blank=True)
+    token_created_at = models.DateTimeField(null=True, blank=True)
+    reset_request_count = models.IntegerField(default=0)
+    last_reset_request = models.DateTimeField(null=True, blank=True)
+
+    profile_image = models.ImageField(upload_to='profiles/', null=True, blank=True)

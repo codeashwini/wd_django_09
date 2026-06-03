@@ -42,7 +42,8 @@ INSTALLED_APPS = [
     'autoslug',
     'notifications',
     'contact',
-    'UserReg'
+    'UserReg',
+    
 ]
 
 MIDDLEWARE = [
@@ -140,3 +141,10 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'av01097@gmail.com'
 EMAIL_HOST_PASSWORD = 'ldju njoh jhip cisl'
+
+RECAPTCHA_SITE_KEY = '6LcxXwgtAAAAAMAMhmmhOjJzPe_I3R9wzQbP1aSH'
+RECAPTCHA_SECRET_KEY = '6LcxXwgtAAAAAG3oY7B6usFsyN8bsbwdO1TLPlcr'
+
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR/'media'

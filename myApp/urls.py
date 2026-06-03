@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from myApp import views
+from django.conf.urls.static import static
+from django.conf import settings 
 
 
 urlpatterns = [
@@ -33,4 +35,4 @@ urlpatterns = [
     path('logout/', views.logout),
     path('forgot-password/', views.forgot_password),
     path('reset-password/<token>', views.reset_passsword)
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
