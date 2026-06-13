@@ -6,6 +6,17 @@
 
 <h1>Welcome User</h1>
 
+{% if completion < 50 %}
+    <p style="color:red"><b>Profile Completion : {{completion}} % </b><p>
+{% elif completion < 100 %}
+    <p style="color:orange"><b>Profile Completion : {{completion}} % </b><p>
+{% else %}
+    <p style="color:green"><b>Profile Completion : {{completion}} % </b><p>
+{% endif %}
+
+<div style="width={{completion}}%; background-color:#4caf50; height:20px; border-radius:10px "></div>
+
+<div class="container">
 {% if user.profile_image %}
 
 <img src="{{user.profile_image.url}}" width="150" heiht="150">
@@ -21,5 +32,9 @@
 
 <p><b>Name:</b>{{user.name}}</p>
 <p><b>Email:</b>{{user.email}}</p>
-
+<p><b>Account Created:<b>{{user.created_at}}</a>
+<br>
+<a href="/edit_profile/" class="btn btn-primary">Edit Profile</a><br><br>
+<a href="/change_password/" class="btn btn-primary">Change Password</a>
+</div>
 {% endblock  %}

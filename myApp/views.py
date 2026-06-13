@@ -140,7 +140,9 @@ def profile(request):
             user.save()
             request.session["user_image"] = user.profile_image.url
 
-    return render(request, "profile.html", {'user':user})
+    completion_percent = calculate_profile_completion(user)
+
+    return render(request, "profile.html", {'user':user, 'completion':completion_percent})
 
 def logout(request):
     request.session.flush()
@@ -235,3 +237,69 @@ def reset_passsword(request, token):
         return render(request, 'reset_password.html')
     except Exception as e:
         return redirect('/login/')
+    
+
+def edit_profile(request):
+    if 'user_id' not in request.session:
+        return redirect('/login/')
+    
+    user = RegUser.objects.get(id=request.session['user_id'])
+
+    if request.method == "POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+
+        if RegUser.objects.filter(email = email).exclude(id=user.id).exists():
+            return render(request, 'edit_profile.html', {
+                'user':user,
+                'error':'Email already in use'
+            })
+        user.name = name
+        user.email = email
+        user.save()
+
+        request.session['user_name'] = user.name
+        return redirect('/profile/')
+    
+    return render(request, 'edit_profile.html', {'user':user})
+
+def change_password(request):
+    if 'user_id' not in request.session:
+        return redirect('/login/')
+    
+    user = RegUser.objects.get(id=request.session['user_id'])
+
+    if request.method == "POST":
+        current_password = request.POST.get('current_password')
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        if not check_password(current_password, user.password):
+            return render(request, 'change_password.html', {'error':'Current Password is incorrect'})
+        
+        if new_password != confirm_password:
+            return render(request, 'change_password.html', {'error':'Password and Confirm Password are not same'})
+        
+        if check_password(new_password,user.password):
+            return render(request, 'change_password.html', {'error':'New Password must be different from old password'})
+        
+        user.password = make_password(new_password)
+        user.save()
+
+        return render(request, 'change_password.html', {'success':'Password Changed Successfully'})
+    return render(request, 'change_password.html')
+
+
+def calculate_profile_completion(user):
+
+    fields = [
+        user.name,
+        user.email,
+        user.profile_image,
+        user.phone,
+    ]
+
+    filled  = sum(1 for field in fields if field)
+    total = len(fields)
+
+    return int((filled/total) * 100)

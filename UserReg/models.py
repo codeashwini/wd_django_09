@@ -6,8 +6,8 @@ class RegUser(models.Model):
     email = models.CharField(max_length=50)
     phone = models.CharField(max_length=10)
     course = models.CharField(max_length=20)
-    password = models.CharField(max_length=10)
-    confirm_pass = models.CharField(max_length=10)
+    password = models.CharField(max_length=100)
+    confirm_pass = models.CharField(max_length=100)
     terms = models.CharField(max_length=10)
     reset_token = models.CharField(max_length=100, null=True, blank=True)
     token_created_at = models.DateTimeField(null=True, blank=True)
@@ -15,3 +15,6 @@ class RegUser(models.Model):
     last_reset_request = models.DateTimeField(null=True, blank=True)
 
     profile_image = models.ImageField(upload_to='profiles/', null=True, blank=True)
+    created_at = models.DateTimeField(auto_now=True)
+
+    

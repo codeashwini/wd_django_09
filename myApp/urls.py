@@ -34,5 +34,7 @@ urlpatterns = [
     path('profile/', views.profile),
     path('logout/', views.logout),
     path('forgot-password/', views.forgot_password),
-    path('reset-password/<token>', views.reset_passsword)
+    path('reset-password/<token>', views.reset_passsword),
+    path('edit_profile/', views.edit_profile),
+    path('change_password/', views.change_password)
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

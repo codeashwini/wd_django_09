@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% block 'title' %}
+    Edit Profile
+{% endblock  %}
+
+{% block 'body' %}
+<h2>Edit Profile</h2>
+<div class="container">
+<div class="card">
+<form method="post" class="form-control">
+    {% csrf_token %}
+
+    <label class="form-label"> Name </label><br>
+    <input type="text" name="name" value={{user.name}} required class="form-control"><br><br>
+
+    <label class="form-label">Email</label><br>
+    <input type="email" name="email" value={{user.email}} required class="form-control"><br><br>
+
+    <button type="submit" class="btn-success btn">Save Changes</button>
+
+</form>
+</div>
+</div>
+
+{% if error %}
+    <p style="color:red"> {{error}}</p>
+{% endif %}
+
+<br>
+<a href="/profile/">Back to Profile</a>
+
+{% endblock  %}
